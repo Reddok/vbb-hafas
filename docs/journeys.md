@@ -14,6 +14,7 @@ With `opt`, you can override the default options, which look like this:
 	transferTime:   0, // minimum time for a single transfer in minutes
 	accessibility:  'none', // 'none', 'partial' or 'complete'
 	bike:           false, // only bike-friendly journeys
+	tickets:        false, // return ticket information?
 	products: {
 		suburban:   true,
 		subway:     true,
