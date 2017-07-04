@@ -75,6 +75,7 @@ With `passedStations: true` and `results: 1`, the response looks like this:
 			},
 			arrival: '2017-05-16T13:26:00+02:00',
 			delay: 0,
+			mode: 'train',
 			line: {
 				type: 'line',
 				id: 'u1',
