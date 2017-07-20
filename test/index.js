@@ -13,6 +13,7 @@ const {
 	assertValidLocation,
 	assertValidLine,
 	assertValidPassed,
+	isValidMode,
 	hour, when,
 	assertValidWhen
 } = require('./util')
@@ -62,7 +63,8 @@ test('journeys – station to station', (t) => {
 			t.strictEqual(part.destination.id, '900000009101')
 			assertValidWhen(t, part.arrival)
 
-			assertValidLine(t, part.line)
+			if (part.mode) t.ok(isValidMode(part.mode))
+			if (part.line) assertValidLine(t, part.line)
 			t.ok(findStation(part.direction))
 			t.ok(part.direction.indexOf('(Berlin)') === -1)
 
@@ -87,7 +89,8 @@ test('journey part details', (t) => {
 		t.equal(typeof part.id, 'string')
 		t.ok(part.id)
 
-		assertValidLine(t, part.line)
+		if (part.mode) t.ok(isValidMode(part.mode))
+		if (part.line) assertValidLine(t, part.line)
 
 		t.equal(typeof part.direction, 'string')
 		t.ok(part.direction)
@@ -115,6 +118,9 @@ test('journeys – station to address', (t) => {
 
 		assertValidStation(t, part.origin)
 		assertValidWhen(t, part.departure)
+
+		if (part.mode) t.ok(isValidMode(part.mode))
+		if (part.line) assertValidLine(t, part.line)
 
 		const dest = part.destination
 		assertValidAddress(t, dest)
@@ -170,7 +176,8 @@ test('departures', (t) => {
 
 			assertValidWhen(t, dep.when)
 			t.ok(findStation(dep.direction))
-			assertValidLine(t, dep.line)
+			if (dep.mode) t.ok(isValidMode(dep.mode))
+			if (dep.line) assertValidLine(t, dep.line)
 		}
 	})
 	.catch(t.ifError)
@@ -226,7 +233,7 @@ test('radar', (t) => {
 		for (let v of vehicles) {
 
 			t.ok(findStation(v.direction))
-			assertValidLine(t, v.line)
+			if (v.line) assertValidLine(t, v.line)
 
 			t.equal(typeof v.coordinates.latitude, 'number')
 			t.ok(v.coordinates.latitude <= 55, 'vehicle is too far away')
